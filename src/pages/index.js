@@ -1,37 +1,110 @@
 import Head from "next/head";
-import Image from "next/image";
+import { useContext, useState, useRef, useEffect } from 'react';
+import { AppStateContext } from '@/pages/AppStateContext';
 
 export default function Home() {
+  const { messages, setMessages } = useContext(AppStateContext);
+  const [inputValue, setInputValue] = useState("");
+  const chatInputRef = useRef(null);
+  const chatMessagesRef = useRef(null); // Tambahkan baris ini
+
+  useEffect(() => {
+    const storedMessages = localStorage.getItem("chatMessages");
+    if (storedMessages) {
+      setMessages(JSON.parse(storedMessages));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      const storedMessages = localStorage.getItem("chatMessages");
+      if (storedMessages) {
+        setMessages(JSON.parse(storedMessages));
+      }
+    }
+  }, []);
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSendMessage = () => {
+    if (inputValue.trim() !== "") {
+      setMessages([inputValue, ...messages]);
+      setInputValue("");
+    }
+  };
+  
+
+  const handleDeleteMessage = (index) => {
+    const updatedMessages = [...messages];
+    updatedMessages.splice(index, 1);
+    setMessages(updatedMessages);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  useEffect(() => {
+    chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+  }, [messages]);
+
   return (
-    <>
-      <Head>
-        <title>My Website</title>
-        <meta name="description" content="Welcome to my website" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        {/*jumbrot*/}
-        <div class="jumbotron ">
-          <h1 class="display-4">Hello, world!</h1>
-          <p class="lead">
-            This is a simple hero unit, a simple jumbotron-style component for
-            calling extra attention to featured content or information.
-          </p>
-
-          <p>
-            It uses utility classes for typography and spacing to space content
-            out within the larger <a href="/about">About</a> container.
-          </p>
+    <div className="container text-center" style={{ paddingTop: "80px" }}>
+      <div className="row justify-content-evenly">
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card">
+            <div className="card-body" style={{ maxHeight: "300px", overflowY: "auto" }}>
+              <h5 className="card-title">LIVE CHAT</h5>
+              <div className="chat-messages" ref={chatMessagesRef} style={{ display: "flex", flexDirection: "column-reverse" }}>
+  {messages.map((message, index) => (
+    <div key={index} className="message">
+      <span>{message}</span>
+      <button
+        className="btn btn-danger btn-sm float-end"
+        onClick={() => handleDeleteMessage(index)}
+      >
+        Hapus
+      </button>
+    </div>
+  ))}
+</div>
+            </div>
+          </div>
         </div>
-
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-          crossorigin="anonymous"
-        ></script>
-      </main>
-    </>
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card">
+            <div className="card-body">
+              <div className="chat-input">
+                <input
+                  type="text"
+                  className="form-control mb-2"
+                  placeholder="Type a message..."
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
+                  ref={chatInputRef}
+                />
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSendMessage}
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
+  
 }
