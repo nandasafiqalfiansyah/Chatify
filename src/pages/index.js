@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useContext, useState, useRef, useEffect } from 'react';
-import { AppStateContext } from '@/pages/AppStateContext';
+import { AppStateContext } from '@/providers/AppStateContext';
 
 export default function Home() {
   const { messages, setMessages } = useContext(AppStateContext);
