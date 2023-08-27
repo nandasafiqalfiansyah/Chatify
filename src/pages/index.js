@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>My Website</title>
+        <title>Test</title>
         <meta name="description" content="Welcome to my website" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script
