@@ -2,8 +2,28 @@
 
 import { faAngleLeft, faCamera, faEllipsisVertical, faLaughSquint, faPaperPlane, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+
+interface UserModel {
+  id: string
+  username: string
+}
+
+interface ChatModel {
+  id: string
+  user: UserModel,
+  message: string,
+  updatedAt: string,
+  createdAt: string
+}
 
 export default function Home() {
+  const [currentUser, setCurrentUser] = useState<UserModel>()
+
+  const [users, setUsers] = useState<Array<UserModel>>([])
+
+  const [chats, setChats] = useState<Array<ChatModel>>([])
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen sm:py-2 bg-gradient-to-r from-green-400 to-green-600">
       <div className="flex flex-col flex-grow w-full max-w-xl bg-gray-100 shadow-md rounded-lg overflow-hidden border-b-4 border-green-600">
@@ -24,7 +44,7 @@ export default function Home() {
 
         {/* Body */}
         <div className="flex flex-col flex-col-reverse flex-grow h-0 p-4 overflow-auto">
-          {
+          {/* {
             [1, 2, 3, 4, 5].map((e) => (
               <div key={e} className="flex w-full mt-2 space-x-3 max-w-xs">
                 <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
@@ -36,16 +56,20 @@ export default function Home() {
                 </div>
               </div>
             ))
-          }
-          <div className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
-            <div className="space-y-2">
-              <div className="bg-green-500 shadow-md text-white p-3 rounded-l-lg rounded-br-lg">
-                <p className="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
+          } */}
+          {
+            chats.map((e) => (
+              <div key={e.id} className="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+                <div className="space-y-2">
+                  <div className="bg-green-500 shadow-md text-white p-3 rounded-l-lg rounded-br-lg">
+                    <p className="text-sm">{e.message}</p>
+                  </div>
+                  <span className="flex text-xs text-gray-500 leading-none justify-end">2 min ago</span>
+                </div>
+                <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
               </div>
-              <span className="flex text-xs text-gray-500 leading-none justify-end">2 min ago</span>
-            </div>
-            <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"></div>
-          </div>
+            ))
+          }
         </div>
 
         {/* Footer */}
