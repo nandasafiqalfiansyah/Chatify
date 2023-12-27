@@ -1,21 +1,11 @@
 
 # Chatify - A Real-time Chat Application
 
-Chatify is a real-time chat application that enables users to communicate with each other instantly. It provides a simple and intuitive interface for sending and receiving messages in real-time.
+Chatify is a real-time chat application It provides a simple and intuitive interface for sending and receiving messages in real-time.
 
 ## Features
 
 - Real-time messaging: Engage in live conversations with other users.
-- User-friendly interface: Clean and intuitive design for easy navigation.
-- Secure communication: Encrypted messages to ensure privacy.
-- User profiles: Create and customize your profile.
-- Online status: Know when users are online or offline.
-- Message notifications: Get notified when you receive new messages.
-- Emojis and stickers: Enhance your conversations with fun visuals.
-- Search functionality: Find specific messages or users.
-- Group chats: Create and participate in group conversations.
-- Multimedia support: Share images, videos, and files.
-- Responsive design: Access the application from any device.
 
 ## License
 
@@ -25,9 +15,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ### Prerequisites
 
-- Node.js (version 12 or above)
-- npm (version 6 or above)
-- MongoDB
+- Node.js 
+- npm 
 
 ### Installation
 
